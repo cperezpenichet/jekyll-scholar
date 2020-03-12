@@ -67,6 +67,23 @@ module Jekyll
             @bibliography_list_tag = tag
           end
 
+          opts.on('-i', '--bibliography_item_tag TAG') do |tag|
+            @bibliography_item_tag = tag
+          end
+
+          opts.on('-a', '--bibliography_item_attributes ATTR') do |attr|
+            @bibliography_item_attributes = {}
+            temp = attr.split(',')
+            temp.each do |x|
+              k, v = x.split(':', 2)
+              @bibliography_item_attributes[k] = v
+            end
+          end
+
+          opts.on('-d', '--details_link_class CLASS') do |x|
+            @details_link_class = x
+          end
+
           opts.on('-p', '--prefix PREFIX') do |prefix|
             @prefix = prefix
           end
@@ -112,7 +129,7 @@ module Jekyll
           end
         end
 
-        argv = arguments.split(/(\B-[cCfhqptTsgGOlLomAr]|\B--(?:cited(_in_order)?|clear|bibliography_list_tag|file|query|prefix|text|style|group_(?:by|order)|type_order|template|locator|label|offset|max|suppress_author|remove_duplicates|))/)
+        argv = arguments.split(/(\B-[cCfhqptTsgGOlLomAriad]|\B--(?:cited(_in_order)?|clear|bibliography_list_tag|bibliography_item_tag|bibliography_item_attributes|details_link_class|file|query|prefix|text|style|group_(?:by|order)|type_order|template|locator|label|offset|max|suppress_author|remove_duplicates|))/)
 
         parser.parse argv.map(&:strip).reject(&:empty?)
       end
@@ -122,6 +139,30 @@ module Jekyll
           config['bibliography_list_tag']
         else
           @bibliography_list_tag
+        end
+      end
+
+      def bibliography_item_tag
+        if @bibliography_item_tag.nil?
+          config['bibliography_item_tag']
+        else
+          @bibliography_item_tag
+        end
+      end
+
+      def bibliography_item_attributes
+        if @bibliography_item_attributes.nil?
+          config['bibliography_item_attributes']
+        else
+          @bibliography_item_attributes
+        end
+      end
+
+      def details_link_class
+        if @details_link_class.nil?
+          config['details_link_class']
+        else
+          @details_link_class
         end
       end
 

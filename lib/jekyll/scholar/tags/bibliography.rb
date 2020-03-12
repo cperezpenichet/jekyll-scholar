@@ -64,10 +64,10 @@ module Jekyll
 
           if generate_details?
             reference << link_to(details_link_for(entry),
-              config['details_link'], :class => config['details_link_class'])
+              config['details_link'], :class => details_link_class)
           end
 
-          content_tag config['bibliography_item_tag'], reference, config['bibliography_item_attributes']
+          content_tag bibliography_item_tag, reference, bibliography_item_attributes
         }.join("\n")
 
         content_tag bibliography_list_tag, bibliography,
